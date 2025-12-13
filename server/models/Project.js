@@ -2,11 +2,21 @@ import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema(
   {
+    // For solo projects, use studentId. For team projects, use teamId and students array.
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: false
     },
+    teamId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Team',
+      required: false
+    },
+    students: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
     assignedGuideId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

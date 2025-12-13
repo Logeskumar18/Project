@@ -301,9 +301,9 @@ const Home = () => {
                   </div>
                   <div className="bg-light rounded-3 p-3 mb-3">
                     <p className="mb-2 small text-muted">Email:</p>
-                    <code className="d-block mb-3">hod@example.com</code>
+                    <code className="d-block mb-3">hod.cs@example.com</code>
                     <p className="mb-2 small text-muted">Password:</p>
-                    <code className="d-block">hod123</code>
+                    <code className="d-block">demo123</code>
                   </div>
                   <Link to="/login/hod" className="btn btn-sm w-100 text-white fw-semibold" style={{background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', border: 'none'}}>
                     Login as HOD
@@ -323,9 +323,9 @@ const Home = () => {
                   </div>
                   <div className="bg-light rounded-3 p-3 mb-3">
                     <p className="mb-2 small text-muted">Email:</p>
-                    <code className="d-block mb-3">staff@example.com</code>
+                    <code className="d-block mb-3">arun.singh@example.com</code>
                     <p className="mb-2 small text-muted">Password:</p>
-                    <code className="d-block">staff123</code>
+                    <code className="d-block">demo123</code>
                   </div>
                   <Link to="/login/staff" className="btn btn-sm w-100 text-white fw-semibold" style={{background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', border: 'none'}}>
                     Login as Staff
@@ -345,7 +345,7 @@ const Home = () => {
                   </div>
                   <div className="bg-light rounded-3 p-3 mb-3">
                     <p className="mb-2 small text-muted">Email:</p>
-                    <code className="d-block mb-3">student@example.com</code>
+                    <code className="d-block mb-3">raj.patel@example.com</code>
                     <p className="mb-2 small text-muted">Password:</p>
                     <code className="d-block">demo123</code>
                   </div>

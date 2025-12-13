@@ -2,20 +2,22 @@ import mongoose from 'mongoose';
 
 const progressSchema = new mongoose.Schema(
   {
+    // For team projects, use teamId. For solo projects, leave null.
     teamId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Team',
-      required: true
+      required: false
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project',
       required: true
     },
+    // For solo projects, use studentId. For team projects, use studentId of submitter (optional)
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: false
     },
     weekNumber: {
       type: Number,

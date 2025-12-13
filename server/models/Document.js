@@ -7,10 +7,11 @@ const documentSchema = new mongoose.Schema(
       ref: 'Project',
       required: true
     },
+    // For solo projects, use studentId. For team projects, use studentId of submitter (optional)
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: false
     },
     type: {
       type: String,

@@ -710,11 +710,32 @@ const StaffDashboard = () => {
             <Card className="border-0 shadow-sm">
               <Card.Body className="p-4">
                 <h5 className="fw-bold mb-4">👥 Create New Team</h5>
-                <Form onSubmit={(e) => {
+                <Form onSubmit={async (e) => {
                   e.preventDefault();
-                  setSuccessMessage('Team created successfully!');
-                  e.target.reset();
-                  setTimeout(() => setSuccessMessage(''), 3000);
+                  const form = e.target;
+                  const teamName = form[0].value;
+                  const projectTitle = form[1].value;
+                  const projectDescription = form[2].value;
+                  const leaderId = form[3].value;
+                  const memberOptions = form[4].options;
+                  const memberIds = [];
+                  for (let i = 0; i < memberOptions.length; i++) {
+                    if (memberOptions[i].selected) memberIds.push(memberOptions[i].value);
+                  }
+                  try {
+                    await api.post('/staff/teams/create', {
+                      name: teamName,
+                      projectTitle,
+                      projectDescription,
+                      leaderId,
+                      memberIds
+                    });
+                    setSuccessMessage('Team created successfully!');
+                    form.reset();
+                    setTimeout(() => setSuccessMessage(''), 3000);
+                  } catch (err) {
+                    setSuccessMessage('Error creating team: ' + (err.response?.data?.message || err.message));
+                  }
                 }}>
                   <h6 className="fw-bold mb-3">Team Details</h6>
                   <Form.Group className="mb-3">
@@ -750,11 +771,9 @@ const StaffDashboard = () => {
                     <Form.Label>Team Leader *</Form.Label>
                     <Form.Select required>
                       <option value="">Select team leader...</option>
-                      <option value="1">Raj Patel (21001)</option>
-                      <option value="2">Priya Singh (21002)</option>
-                      <option value="3">Amit Kumar (21003)</option>
-                      <option value="4">Neha Sharma (21004)</option>
-                      <option value="5">Rohit Verma (21005)</option>
+                      {assignedStudents.map(s => (
+                        <option key={s._id || s.id} value={s._id || s.id}>{s.name} ({s.studentId || s.email})</option>
+                      ))}
                     </Form.Select>
                     <Form.Text className="text-muted">
                       Only students without teams are shown
@@ -769,11 +788,9 @@ const StaffDashboard = () => {
                       size="lg"
                       style={{height: '150px'}}
                     >
-                      <option value="1">Raj Patel (21001)</option>
-                      <option value="2">Priya Singh (21002)</option>
-                      <option value="3">Amit Kumar (21003)</option>
-                      <option value="4">Neha Sharma (21004)</option>
-                      <option value="5">Rohit Verma (21005)</option>
+                      {assignedStudents.map(s => (
+                        <option key={s._id || s.id} value={s._id || s.id}>{s.name} ({s.studentId || s.email})</option>
+                      ))}
                     </Form.Control>
                     <Form.Text className="text-muted">
                       Hold Ctrl/Cmd to select multiple students

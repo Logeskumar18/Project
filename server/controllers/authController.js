@@ -19,7 +19,9 @@ export const register = async (req, res) => {
       });
     }
 
-    const { name, email, password, role, department, employeeId, studentId, phone } = req.body;
+    let { name, email, password, role, department, employeeId, studentId, phone } = req.body;
+    // Map 'Guide' to 'Staff' internally
+    if (role === 'Guide') role = 'Staff';
 
     // Determine which model to use based on role
     let UserModel;
@@ -41,7 +43,7 @@ export const register = async (req, res) => {
     } else {
       return res.status(400).json({
         status: 'error',
-        message: 'Invalid role. Must be Student, Staff, or HOD'
+        message: 'Invalid role. Must be Student, Staff, HOD, or Guide'
       });
     }
 
@@ -95,7 +97,7 @@ export const register = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: role,
+            role: req.body.role, // Return the originally requested role for clarity
             department: user.department,
             employeeId: user.employeeId,
             studentId: user.studentId,
@@ -136,7 +138,9 @@ export const login = async (req, res) => {
       });
     }
 
-    const { email, password, role } = req.body;
+    let { email, password, role } = req.body;
+    // Map 'Guide' to 'Staff' internally
+    if (role === 'Guide') role = 'Staff';
 
     // Determine which model to use based on role
     let UserModel;
@@ -149,7 +153,7 @@ export const login = async (req, res) => {
     } else {
       return res.status(400).json({
         status: 'error',
-        message: 'Invalid role. Must be Student, Staff, or HOD'
+        message: 'Invalid role. Must be Student, Staff, HOD, or Guide'
       });
     }
 
@@ -192,7 +196,7 @@ export const login = async (req, res) => {
           _id: user._id,
           name: user.name,
           email: user.email,
-          role: role,
+          role: req.body.role, // Return the originally requested role for clarity
           department: user.department,
           employeeId: user.employeeId,
           studentId: user.studentId,

@@ -1,3 +1,27 @@
+  // State for feedback form
+  const [feedbackSubject, setFeedbackSubject] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
+
+  // Handler for feedback form submission
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    setFeedbackLoading(true);
+    try {
+      const res = await api.post("/communication/messages", {
+        subject: feedbackSubject,
+        message: feedbackMessage,
+        recipientRole: "Guide" // or use actual guide ID if available
+      });
+      setSuccessMessage("Message sent to your Guide!");
+      setFeedbackSubject("");
+      setFeedbackMessage("");
+    } catch (err) {
+      setSuccessMessage("Failed to send message: " + (err.response?.data?.message || err.message));
+    }
+    setFeedbackLoading(false);
+    setTimeout(() => setSuccessMessage(''), 3000);
+  };
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -506,20 +530,36 @@ const StudentDashboard = () => {
               <Card className="border-0 shadow-sm">
                 <Card.Body className="p-4">
                   <h5 className="fw-bold mb-4">📞 Contact Your Guide</h5>
-                  <Form>
+                  <Form onSubmit={handleFeedbackSubmit}>
                     <Form.Group className="mb-3">
                       <Form.Label>Subject</Form.Label>
-                      <Form.Control placeholder="Enter message subject" />
+                      <Form.Control
+                        placeholder="Enter message subject"
+                        value={feedbackSubject}
+                        onChange={e => setFeedbackSubject(e.target.value)}
+                        required
+                        disabled={feedbackLoading}
+                      />
                     </Form.Group>
                     <Form.Group className="mb-4">
                       <Form.Label>Message</Form.Label>
-                      <Form.Control as="textarea" rows={4} placeholder="Type your message here" />
+                      <Form.Control
+                        as="textarea"
+                        rows={4}
+                        placeholder="Type your message here"
+                        value={feedbackMessage}
+                        onChange={e => setFeedbackMessage(e.target.value)}
+                        required
+                        disabled={feedbackLoading}
+                      />
                     </Form.Group>
-                    <Button 
+                    <Button
+                      type="submit"
                       className="w-100 fw-semibold text-white"
                       style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', border: 'none'}}
+                      disabled={feedbackLoading}
                     >
-                      Send Message
+                      {feedbackLoading ? 'Sending...' : 'Send Message'}
                     </Button>
                   </Form>
                 </Card.Body>

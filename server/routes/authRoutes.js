@@ -34,8 +34,8 @@ const registerValidation = [
   body('role')
     .notEmpty()
     .withMessage('Role is required')
-    .isIn(['HOD', 'Staff', 'Student'])
-    .withMessage('Role must be either HOD, Staff, or Student')
+    .isIn(['HOD', 'Staff', 'Student', 'Guide'])
+    .withMessage('Role must be either HOD, Staff, Student, or Guide')
 ];
 
 const loginValidation = [
@@ -52,8 +52,8 @@ const loginValidation = [
   body('role')
     .notEmpty()
     .withMessage('Role is required')
-    .isIn(['Student', 'Staff', 'HOD'])
-    .withMessage('Role must be Student, Staff, or HOD')
+    .isIn(['Student', 'Staff', 'HOD', 'Guide'])
+    .withMessage('Role must be Student, Staff, HOD, or Guide')
 ];
 
 // Public routes
